@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface,\Serializable
 {
     /**
      * @ORM\Id
@@ -287,4 +287,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+      * @link https://php.net/manual/en/serializable.serialize.php
+      * @return string
+      * @since 5.1.0
+      */
+
+      public function serialize()
+      {
+          return serialize([
+              $this->id,
+              $this->username,
+              $this->password
+          ]);
+      }
+
+      /**
+       * @link https://php.net/manual/en/serializable.unserialize.php
+       * @param string $serialized <p>
+       * @return void
+       * @since 5,1,0 
+       */
+
+       public function unserialize($serialized)
+       {
+           list(
+            $this->id,
+            $this->username,
+            $this->password
+           ) = unserialize($serialized, ['allowed_classes'=> false]); 
+       }
 }
