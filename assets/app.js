@@ -11,5 +11,7 @@ import './styles/app.scss';
 // any CSS you import will uotput into a single css file (add.css in this case)
 import { Tooltip, Toast, Popover } from 'bootstrap';
 
+import './js/scripts'
+
 // start the Stimulus application
 import './bootstrap';
